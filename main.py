@@ -4,18 +4,20 @@
 
 #TODO: Pancake command, quote command, image command, music possibly?
 
-import requests
-import random
+import requests # do we really need this i mean we are using urlopen
 
+from random import choice # for choosing :)
 from urllib.request import urlopen # for opening the url
 from json import load # for the json
-from discord import Color, Embed, Game # self explanatory
+from discord import Color, Embed, Game, File # self explanatory
 from os import environ # for the token
 from discord.ext import commands # dunno what this does but we need it for the bot to work lmao
 from webserver import keep_alive # function to keep the webserver running
 
 bot = commands.Bot(command_prefix="!")
 bot.remove_command("help")
+
+possible_image_paths = ["chains.jpg", "hercules.jpg", "idk.jpg", "muscles.webp", "pancakes.webp"]
 
 url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
 json = load(urlopen(url))
@@ -30,8 +32,6 @@ quote = {
 # Column 2: Quote
 # Column 3: Author
 
-# i am so good i am not at all jealousi promise not at all
-# not at all no dont even worry about it
 
 @bot.event
 async def on_ready():
@@ -44,6 +44,7 @@ async def on_ready():
         )
     )
 
+
     @bot.command(
         name="help",
         help="THIS IS HELP YOU IDIOT",
@@ -51,6 +52,7 @@ async def on_ready():
     )
     async def help(ctx):
         await ctx.channel.send("This is help.")
+
 
     @bot.command(
         name="ping",
@@ -60,6 +62,7 @@ async def on_ready():
     )
     async def ping(ctx):
         await ctx.send(":ping_pong: Pong! **{round(.latency*1000)} ms**".format(bot))
+
 
     @bot.command(
         name="pancake",
@@ -72,6 +75,7 @@ async def on_ready():
                 description="The Rock is making pancakes."
             )
         )
+
 
     @bot.command(
         name="quote",
@@ -92,7 +96,8 @@ async def on_ready():
                 )
             )
         )
-    
+
+
     @bot.command(
         name="image",
         help="The Rock will flex his muscles... or not.",
@@ -102,24 +107,15 @@ async def on_ready():
         await ctx.channel.send(
             embed=Embed(
                 title="Massive Muscles",
-                color = Color.dark_red(),
-                description="The image is... not yet available."
+                color = Color.blue(),
+                description="The image is... ~~not yet~~ now available."
+            ),
+            file=File(
+                f"the_rock_images/{choice(possible_image_paths)}"  
             )
         )
 
-
-
-# @bot.event
-# async def on_message(msg):
-#     if msg.content.strip().lower() == ""
-# isnt it raw_json nope just made it json
-#ohh ok
-# i love that we are talking in comments
-# because you aren't online in discord
-#yeah my school blocks discord but not repl so i can still work a little on the bot
 keep_alive() # cpr
 TOKEN = environ['TOKEN']
 bot.run(TOKEN)
 print(json)
-#gtg
-#ill be back in like 15 minutes idk
