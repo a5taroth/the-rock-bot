@@ -2,98 +2,86 @@
 # he will die so dont break it but it also tells him what
 # to do and how to do so plz dont break it
 
-#TODO: Pancake command, quote command, image command, music possibly?
-
-import requests # do we really need this i mean we are using urlopen
+import discord
 
 from random import choice # for choosing :)
 from urllib.request import urlopen # for opening the url
 from json import load # for the json
-from discord import Color, Embed, Game, File # self explanatory
 from os import environ # for the token
 from discord.ext import commands # dunno what this does but we need it for the bot to work lmao
 from webserver import keep_alive # function to keep the webserver running
 
-bot = commands.Bot(command_prefix="!")
-bot.remove_command("help")
+bot = commands.Bot(
+  command_prefix = "!",
+  activity = discord.Activity(
+    name = "Face Off",
+    type = discord.ActivityType.listening
+  ),
+  status = discord.Status.online
+)
+players = []
 
-possible_image_paths = ["chains.jpg", "hercules.jpg", "idk.jpg", "muscles.webp", "pancakes.webp"]
+possible_words = ("Hello", "Bye", "Bad", "Idiot")
+hangman_word = choice(possible_words) 
 
-url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
-json = load(urlopen(url))
+image_path = [
+    "chains.jpg",
+    "hercules.jpg",
+    "idk.jpg",
+    "muscles.webp"
+]
 
-quote = {
-    "desc": "This is the description.",
-    "auth": "default",
-    # "json": ""
-}
-
-# Column 1: Quote id in our database
-# Column 2: Quote
-# Column 3: Author
-
+quote_url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
 
 @bot.event
 async def on_ready():
-    print("Executing on {.user}".format(bot))
-    # print(load(quote["json"]))
-
-    await bot.change_presence(
-        activity=Game(
-            name="it's about drive, it's about power"
-        )
-    )
-
-
-    @bot.command(
-        name="help",
-        help="THIS IS HELP YOU IDIOT",
-        aliases=[]
-    )
-    async def help(ctx):
-        await ctx.channel.send("This is help.")
+    print(f"Executing on {bot.user}")
 
 
     @bot.command(
         name="ping",
-        help="The Rock will tell you how fast his latency is in milliseconds!",
+        help="Tells you how fast The Rock can eat 100 pancakes",
         pass_context=True,
         aliases=["pingpong", "pong", "latency"]
     )
     async def ping(ctx):
-        await ctx.send(":ping_pong: Pong! **{round(.latency*1000)} ms**".format(bot))
+        await ctx.send(f":ping_pong: Pong! **{round(bot.latency*1000)} ms**")
 
 
     @bot.command(
         name="pancake",
         aliases=["pc", "pancakes"]
     )
-    async def make_pancakes(ctx):
-        ctx.channel.send(
-            embed=Embed(
-                title="Making Pancakes",
-                description="The Rock is making pancakes."
-            )
+    async def eat_pancakes(ctx):
+        embed_ = discord.Embed(
+            description="The Rock is eating pancakes... like a lot of 'em."
+        )
+        embed_.set_image(url="http://www.fitness-clubs.be/img/dyn.php?src=/upload-news-pictures/53da57f17a435/news.png&w=400")
+        await ctx.channel.send(
+            embed = embed_
         )
 
 
     @bot.command(
         name="quote",
         help="The Rock will send a very inspiring quote that is guarenteed to be extremely knowledgeable.",
-        aliases=[]
+        aliases=["quotes", "q", "i_am_depressed", "nobody_will_ever_find_out_that_this_is_an_alias"]
     )
     async def send_a_quote(ctx):
-        global json
+       quote = load(urlopen(quote_url))[0] # The [0] is because the table is formatted weirdly /shrug
 
-        json=load(urlopen(url))
+# quote[0] = ID
+# quote[1] = Quote
+# quote[2] = Author
 
-        await ctx.channel.send(
-            embed=Embed(
+       await ctx.channel.send(
+            embed = discord.Embed(
                 title="Quote",
                 description=(
-                    "{}"
-                    " -The Rock ({})".format(quote["desc"], quote["auth"])
-                )
+                    f"{quote[1]}"
+                    f"\n *- ~~{quote[2]}~~ The Rock*"
+                ),
+                url=f"http://www.Famous-Quotes.uk/api.php?id={quote[0]}"
             )
         )
 
@@ -101,21 +89,46 @@ async def on_ready():
     @bot.command(
         name="image",
         help="The Rock will flex his muscles... or not.",
-        aliases=[]
+        aliases=["img","photo"]
     )
-    async def send_those_muscles(ctx):
+    async def image(ctx):
         await ctx.channel.send(
-            embed=Embed(
-                title="Massive Muscles",
-                color = Color.blue(),
-                description="The image is... ~~not yet~~ now available."
+            embed = discord.Embed(
+                title = "Massive Muscles",
+                color = discord.Color.blue(),
+                description = "The image is... ~~not yet~~ now available."
             ),
-            file=File(
-                f"the_rock_images/{choice(possible_image_paths)}"  
+            file = discord.File(
+                f"the_rock_images/{choice(image_path)}"  
             )
         )
 
-keep_alive() # cpr
-TOKEN = environ['TOKEN']
-bot.run(TOKEN)
-print(json)
+
+    @bot.command(
+        name="race",
+        help="Race against another player in your vehicle of choice as the Rock cheers you on.",
+        aliases=["Race", "RACE", "vroom-vroom", "vroom vroom"]
+    )
+    async def vroom_vroom(ctx, arg):
+        await players.extend(ctx.author)
+
+        await ctx.channel.send(
+            embed = discord.Embed(
+                title = "Bumpy Ride by ~~Mohambi~~ The Rock", #HAHAHAHAHAHAHAHHAHA
+                description = "Atleast two players needed to begin.",
+                color = discord.Color.red()
+            )
+        )
+
+
+    @bot.command( # it doesnt like this line apparently 
+        name="hangman",
+        aliases=["hm", "manhang?"]
+    )
+    async def hang_the_man(ctx):
+        print("idiot")
+      
+        
+    
+keep_alive()
+bot.run(environ['TOKEN'])
