@@ -1,6 +1,4 @@
-# basically what this does is the rock is on his death bed
-# and he dies after an hour so this file makes a tube
-# for uptimerobot.com to give him oxygen
+# This script keeps the bot running using Uptime Robot
 
 from flask import Flask
 from threading import Thread
@@ -9,8 +7,8 @@ app = Flask('')
 
 @app.route('/')
 def main():
-    return "The Rock is grinding.. dont disturb him plz"
-    
+    return "The Rock is grinding... don't disturb him and go to discord.com"
+
 def run():
     app.run(host="0.0.0.0", port=8080)
 

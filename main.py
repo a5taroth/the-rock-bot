@@ -1,134 +1,219 @@
-# okay so this is basically the rocks heart if you break it
-# he will die so dont break it but it also tells him what
-# to do and how to do so plz dont break it
+# The main program where everything runs (I mean it's called main.py)
+
+# TODO: Fix image, Gif command, 8ball, some fun games, make cool embed for help command
+# TODO (ILUVSOUP): Once we finish everything I'll tidy up the code, make the embeds a bit fancier and just some polishing
+# TODO: Implement hacky right align solution to quote
 
 import discord
+import random
+import json
+import images
+import response
 
-from random import choice # for choosing :)
-from urllib.request import urlopen # for opening the url
-from json import load # for the json
-from os import environ # for the token
-from discord.ext import commands # dunno what this does but we need it for the bot to work lmao
-from webserver import keep_alive # function to keep the webserver running
+from datetime import time
+from urllib.request import urlopen
+from os import environ 
+from discord.ext import commands 
+from webserver import keep_alive 
+
+PREFIX = "$"
 
 bot = commands.Bot(
-  command_prefix = "!",
+  command_prefix = PREFIX, 
   activity = discord.Activity(
-    name = "Face Off",
-    type = discord.ActivityType.listening
+    name="Face Off",
+    details=f"Use {PREFIX}help to learn more.",
+    type=discord.ActivityType.listening
   ),
   status = discord.Status.online
 )
+bot.remove_command("help")
+
 players = []
+CHOICE_TYPE=["n", "p", "c"] # for rockball
 
-possible_words = ("Hello", "Bye", "Bad", "Idiot")
-hangman_word = choice(possible_words) 
-
-image_path = [
-    "chains.jpg",
-    "hercules.jpg",
-    "idk.jpg",
-    "muscles.webp"
-]
+possible_words = ("rock", "muscle", "exercise", "pancakes")
+hangman_word = random.choice(possible_words) 
 
 quote_url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
 
 @bot.event
 async def on_ready():
-    print(f"Executing on {bot.user}")
+    random.seed(time) # curse my internet speed so fing slow
+    print(f"{bot.user} is now online.")
 
 
-    @bot.command(
-        name="ping",
-        help="Tells you how fast The Rock can eat 100 pancakes",
-        pass_context=True,
-        aliases=["pingpong", "pong", "latency"]
+@bot.group(
+    name="help",
+    invoke_without_command=True
+)
+async def help(ctx):
+    help=discord.Embed(
+        title="Help",
+        description=f"Use {PREFIX}help <command> for more info",
     )
-    async def ping(ctx):
-        await ctx.send(f":ping_pong: Pong! **{round(bot.latency*1000)} ms**")
 
+    await ctx.author.send(embed=help)
 
-    @bot.command(
-        name="pancake",
-        aliases=["pc", "pancakes"]
-    )
-    async def eat_pancakes(ctx):
-        embed_ = discord.Embed(
-            description="The Rock is eating pancakes... like a lot of 'em."
+@help.command()
+async def ping(ctx):
+    await ctx.send(
+        embed=discord.Embed(
+            title="Ping",
+            description="Tells you how fast The Rock can eat 100 pancakes."
         )
-        embed_.set_image(url="http://www.fitness-clubs.be/img/dyn.php?src=/upload-news-pictures/53da57f17a435/news.png&w=400")
-        await ctx.channel.send(
-            embed = embed_
-        )
-
-
-    @bot.command(
-        name="quote",
-        help="The Rock will send a very inspiring quote that is guarenteed to be extremely knowledgeable.",
-        aliases=["quotes", "q", "i_am_depressed", "nobody_will_ever_find_out_that_this_is_an_alias"]
     )
-    async def send_a_quote(ctx):
-       quote = load(urlopen(quote_url))[0] # The [0] is because the table is formatted weirdly /shrug
 
-# quote[0] = ID
-# quote[1] = Quote
-# quote[2] = Author
 
-       await ctx.channel.send(
-            embed = discord.Embed(
-                title="Quote",
-                description=(
-                    f"{quote[1]}"
-                    f"\n *- ~~{quote[2]}~~ The Rock*"
-                ),
-                url=f"http://www.Famous-Quotes.uk/api.php?id={quote[0]}"
+@help.command()
+async def pancake(ctx):
+    await ctx.send(
+        embed=discord.Embed(
+            title="Pancake",
+            description="The Rock will serve you some of those delicious :pancakes:"
+        )
+    )
+
+@help.command(
+    name="hangman",
+    aliases=["hg", "manhang?"]
+)
+async def hangman_help(ctx):
+    await ctx.send(
+        embed=discord.Embed(
+            title="Hangman",
+            description="Race against another player in your vehicle of choice as the Rock cheers you on."
+        )
+    )
+
+
+@bot.command(
+    name="ping",
+    pass_context=True,
+    aliases=["pingpong", "pong", "latency"]
+)
+async def _ping(ctx):
+  await ctx.send(f":ping_pong: Pong! **{round(bot.latency*1000)} ms**")
+
+
+@bot.command(
+    name="pancake",
+    aliases=["pc", "pancakes"]
+)
+async def _pancake(ctx):
+    _embed=discord.Embed(
+        title="Error 69",
+        description="This feature is in development."  )
+  
+    await ctx.channel.send(
+        embed=_embed
+    )
+  
+@bot.command(
+    name="quote",
+    help="The Rock will send a very inspiring quote that is guarenteed to be extremely knowledgeable.",
+    aliases=["quotes", "q", "i_am_depressed", "nobody_will_ever_find_out_that_this_is_an_alias"]
+)
+async def quote(ctx):
+    quote = json.load(urlopen(quote_url))[0] # The [0] is because the table is formatted weirdly /shrug
+
+    # quote[0] = ID (try 1123 for funny)
+    # quote[1] = Quote
+    # quote[2] = Author
+
+    await ctx.channel.send(
+        embed=discord.Embed(
+            title="Very inspirational quote",
+            description=(
+                f"{quote[1]}"
+                f"\n*- ~~{quote[2]}~~ The Rock*"
             )
         )
-
-
-    @bot.command(
-        name="image",
-        help="The Rock will flex his muscles... or not.",
-        aliases=["img","photo"]
     )
-    async def image(ctx):
-        await ctx.channel.send(
-            embed = discord.Embed(
-                title = "Massive Muscles",
-                color = discord.Color.blue(),
-                description = "The image is... ~~not yet~~ now available."
-            ),
-            file = discord.File(
-                f"the_rock_images/{choice(image_path)}"  
-            )
+
+@bot.command(
+    name="image",
+    help="The Rock will flex his muscles... or not.",
+    aliases=["img","photo"]
+)
+async def image(ctx):
+    await ctx.channel.send(
+        file=discord.File(
+            f"images/{random.choice(images.image_paths)}"
         )
-
-
-    @bot.command(
-        name="race",
-        help="Race against another player in your vehicle of choice as the Rock cheers you on.",
-        aliases=["Race", "RACE", "vroom-vroom", "vroom vroom"]
     )
-    async def vroom_vroom(ctx, arg):
-        await players.extend(ctx.author)
 
-        await ctx.channel.send(
-            embed = discord.Embed(
-                title = "Bumpy Ride by ~~Mohambi~~ The Rock", #HAHAHAHAHAHAHAHHAHA
-                description = "Atleast two players needed to begin.",
-                color = discord.Color.red()
-            )
+
+@bot.group(
+    name="race",
+    aliases=["vroom", "vroom-vroom"],
+    invoke_without_command=True
+)
+async def race(ctx, arg:str):
+    await ctx.channel.send(
+        embed = discord.Embed(
+            title = "Bumpy Ride by ~~Mohambi~~ The Rock", 
+            description = "Atleast two players needed to begin.",
+            color = discord.Color.red()
         )
-
-
-    @bot.command( # it doesnt like this line apparently 
-        name="hangman",
-        aliases=["hm", "manhang?"]
     )
-    async def hang_the_man(ctx):
-        print("idiot")
-      
-        
+
+
+@race.command(
+    name="start",
+    aliases=["begin", "s"]
+)
+async def race_start(ctx):
+    await ctx.send("Starting the race.")
+
+
+@bot.command(
+    name="hangman",
+    aliases=["hm", "manhang?"]
+)
+async def hang_the_man(ctx):
+    await ctx.send(
+        embed=discord.Embed(
+            title="Hangman",
+            description="This feature is in development."
+        )
+    )
+
+
+@bot.command(
+    name="rockball",
+    aliases=["ask-8ball", "magic-8ball", "8b", "8-ball", "8ball", "rb"]
+)
+async def rock_hard_balls(ctx):
+    choice_embed=discord.Embed(
+        title=":8ball: The Almighty Rock Ball"
+    )
     
-keep_alive()
+    NPC_CHOICE=random.choice(CHOICE_TYPE)
+    if NPC_CHOICE=='n':
+        response.choice=random.choice(response.neg)
+        choice_embed.color=discord.Color.red()
+    elif NPC_CHOICE=='p':
+        response.choice=random.choice(response.pos)
+        choice_embed.color=discord.Color.green()
+    else:
+        response.choice=random.choice(response.non_com)
+        choice_embed.color=discord.Color.teal()
+
+    choice_embed.description=response.choice
+    choice_embed.set_thumbnail(url="https://discord.com/assets/0cfd4882c0646d504900c90166d80cf8.svg")
+
+    
+    await ctx.send(
+        embed=choice_embed
+    )
+
+
+keep_alive() 
 bot.run(environ['TOKEN'])
+
+'''
+Discord- Scuffed Edition
+>
+
+'''
