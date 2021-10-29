@@ -1,9 +1,5 @@
 # The main program where everything runs (I mean it's called main.py)
 
-# TODO: Fix image, Gif command, 8ball, some fun games, make cool embed for help command
-# TODO (ILUVSOUP): Once we finish everything I'll tidy up the code, make the embeds a bit fancier and just some polishing
-# TODO: Implement hacky right align solution to quote
-
 import discord
 import random
 import json
@@ -37,9 +33,34 @@ hangman_word = random.choice(possible_words)
 
 quote_url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
 
+help_embed=discord.Embed(
+    title="Help",
+    description=f"Use {PREFIX}help <command> for more info",
+)
+help_embed.add_field(
+    name="Features",
+    value=(
+'''
+-> The Rock Ball (entirely different from the Rock's balls)
+-> Quote
+-> Ping
+'''
+    )
+)
+help_embed.add_field(
+    name="Games",
+    value=(
+'''
+-> Pancake Empire
+-> Hangman
+-> Car Racing
+'''
+    )
+)
+
 @bot.event
 async def on_ready():
-    random.seed(time) # curse my internet speed so fing slow
+    random.seed(time)
     print(f"{bot.user} is now online.")
 
 
@@ -48,12 +69,7 @@ async def on_ready():
     invoke_without_command=True
 )
 async def help(ctx):
-    help=discord.Embed(
-        title="Help",
-        description=f"Use {PREFIX}help <command> for more info",
-    )
-
-    await ctx.author.send(embed=help)
+    await ctx.send(embed=help_embed)
 
 @help.command()
 async def ping(ctx):
@@ -115,11 +131,11 @@ async def _pancake(ctx):
     aliases=["quotes", "q", "i_am_depressed", "nobody_will_ever_find_out_that_this_is_an_alias"]
 )
 async def quote(ctx):
-    quote = json.load(urlopen(quote_url))[0] # The [0] is because the table is formatted weirdly /shrug
-
-    # quote[0] = ID (try 1123 for funny)
-    # quote[1] = Quote
-    # quote[2] = Author
+    quote = json.load(urlopen(quote_url))[0] 
+    # The [0] is because the api returns a nested array
+    # -> quote[0] = ID 
+    # -> quote[1] = Quote
+    # -> quote[2] = Author
 
     await ctx.channel.send(
         embed=discord.Embed(
@@ -127,13 +143,14 @@ async def quote(ctx):
             description=(
                 f"{quote[1]}"
                 f"\n*- ~~{quote[2]}~~ The Rock*"
-            )
+            ),
+            color = discord.Color.teal()
         )
     )
 
 @bot.command(
     name="image",
-    help="The Rock will flex his muscles... or not.",
+    help="But first, let me take a selfie!",
     aliases=["img","photo"]
 )
 async def image(ctx):
@@ -198,7 +215,7 @@ async def rock_hard_balls(ctx):
         choice_embed.color=discord.Color.green()
     else:
         response.choice=random.choice(response.non_com)
-        choice_embed.color=discord.Color.teal()
+        choice_embed.color=discord.Color.gold()
 
     choice_embed.description=response.choice
     choice_embed.set_thumbnail(url="https://discord.com/assets/0cfd4882c0646d504900c90166d80cf8.svg")
