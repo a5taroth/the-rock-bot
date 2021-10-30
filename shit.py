@@ -13,18 +13,6 @@ from discord.ext import commands
 PREFIX="$"
 DOUBLE_LINE_BREAK="\n\n"
 
-bot = commands.Bot(
-  command_prefix = PREFIX, 
-  activity = discord.Activity(
-    name="Face Off",
-    details="Use {}help to learn more.".format(PREFIX),
-    type=discord.ActivityType.listening
-  ),
-  status = discord.Status.online
-)
-bot.remove_command("help")
-
-
 players = []
 CHOICE_TYPE=["n", "p", "c"] # for rockball
 
@@ -33,29 +21,66 @@ hangman_word = random.choice(possible_words)
 
 quote_url = "http://www.famous-quotes.uk/api.php?id=random&minpop=75"
 
+# SETUP
+bot = commands.Bot(
+  command_prefix = PREFIX, 
+  activity = discord.Activity(
+    name="Face Off",
+    details=f"Use {PREFIX}help to learn more.",
+    type=discord.ActivityType.listening
+  ),
+  status = discord.Status.online
+)
+bot.remove_command("help")
+
 
 help_embed=discord.Embed(
     title="Help",
     description=f"Use {PREFIX}help <command> for more info",
 )
 help_embed.add_field(
-    name="Features",
+    name=":rock: FEATURES",
     value=(
 '''
--> The Rock Ball (entirely different from the Rock's balls)
--> Quote
--> Ping
+:speaking_head: Inspiring quotes
+    `$quote`\n
+:ping_pong: Ping (Yes, that's it)
+    `$ping`\n
+:man_dancing: Stop arguing: it's gif (not gif)
+    `$gif`\n
+:wave: Greet your friends (friends are optional)
+    `$welcome`\n
+:sunrise: WAKE UP WAKE UP WAKE UP
+    `$goodmorning`\n
+:sleeping_accommodation: Don't look under your bed
+    `$goodnight`\n
 '''
     )
 )
 help_embed.add_field(
-    name="Games",
+    name=":game_die: FUN",
     value=(
 '''
--> Pancake Empire
--> Hangman
--> Car Racing
+:8ball: Ask the Rock's ball
+    `$8ball`\n
+:thinking_face: Fun facts about The Rock
+    `$trivia`\n
+:pancakes: The Pancake Empire
+    `$pancake`\n
+:skull: Hangman but bad
+    `$hangman`\n
+:red_car: F1: Scuffed Edition
+    `$race`\n
 '''
+    )
+)
+help_embed.set_footer(
+  text=(
+    '''
+Some features are still in development 🛠️
+
+The Rock Bot v1.0 ©️
+    '''
     )
 )
 
@@ -64,7 +89,7 @@ help_embed.add_field(
     invoke_without_command=True
 )
 async def help(ctx):
-    await ctx.send(embed=help_embed)
+    await ctx.author.send(embed=help_embed)
 
 # Ping:
 @bot.command(
@@ -84,7 +109,7 @@ async def ping(ctx):
         )
     )
 
-
+# Pancake
 @bot.command(
     name="pancake",
     aliases=["pc", "pancakes"]
@@ -119,9 +144,9 @@ async def quote(ctx):
     QUOTE = json.load(urlopen(quote_url))[0] 
 
     # The [0] is because the api returns a nested array
-    # -> QUOTE[0] = ID 
-    # -> QUOTE[1] = Quote
-    # -> QUOTE[2] = Author
+    # QUOTE[0] = ID 
+    # QUOTE[1] = Quote
+    # QUOTE[2] = Author
 
     if QUOTE[2]=='': QUOTE[2]="Unknown"
 
@@ -198,7 +223,14 @@ async def wellcum(ctx, *, arg:discord.Member):
     welcome_embed=discord.Embed(
         title=f"Welcome {arg.name}!"
     )
-    welcome_embed.set_image(url="https://images-ext-2.discordapp.net/external/2Mnjz4YHheUtHGgVb-BOzddY7DA2lCVcOBBsoC-NV7o/https/cdn-longterm.mee6.xyz/plugins/commands/images/759279990277144657/1c2ceb1c3e4ab52c94b5ae1e688a25816ccc848f6f79ea5af0f5d83948d2dd98.png?width=734&height=413")
+    welcome_embed.set_image(
+        url=random.choice(
+            [
+                "https://i.ibb.co/H4fPHq8/welcome-2.jpg",
+                "https://images-ext-2.discordapp.net/external/Vdc8YMnwFT0GHN1wvsZZgDcfnG2YiwXEAJ9kM3SZbr4/https/i.ibb.co/T8KD6Hp/welcome.jpg"
+            ]
+        )
+    )
 
     await ctx.send(
         embed=welcome_embed
@@ -225,7 +257,14 @@ async def gudmorn(ctx):
     gm_embed=discord.Embed(
         title="Hope you have a wonderful day!"
     )
-    gm_embed.set_image(url="https://images-ext-2.discordapp.net/external/0y_MxifvmjxtlzOaD0kq_aKV1KDTY8Bwdht4zaPNmWQ/https/media.discordapp.net/attachments/842242244312432700/842900017630674974/unknown.png?width=738&height=413")
+    gm_embed.set_image(
+        url=random.choice(
+            [
+                "https://i.ibb.co/TWbFHtL/gm3.jpg",
+                "https://i.ibb.co/44xhwC9/gm2.jpg"
+            ]
+        )
+    )
 
     await ctx.send(
         embed=gm_embed
@@ -252,7 +291,14 @@ async def gudnite(ctx):
     gn_embed=discord.Embed(
         title="Have a great night!"
     )
-    gn_embed.set_image(url="https://images-ext-2.discordapp.net/external/0y_MxifvmjxtlzOaD0kq_aKV1KDTY8Bwdht4zaPNmWQ/https/media.discordapp.net/attachments/842242244312432700/842900017630674974/unknown.png?width=738&height=413")
+    gn_embed.set_image(
+        url=random.choice(
+            [
+                "https://i.ibb.co/kgw9Fk0/gn1.jpg",
+                "https://i.ibb.co/0czbz1V/gn2.jpg"
+            ]
+        )
+    )
 
     await ctx.send(
         embed=gn_embed
@@ -282,11 +328,6 @@ async def hangman_help(ctx):
             description="Race against another player in your vehicle of choice as the Rock cheers you on."
         )
     )
-
-
-
-
-  
 
 @bot.command(
     name="image",
