@@ -11,7 +11,6 @@ from urllib.request import urlopen
 from discord.ext import commands 
 
 PREFIX="$"
-DOUBLE_LINE_BREAK="\n\n"
 
 players = []
 CHOICE_TYPE=["n", "p", "c"] # for rockball
@@ -77,12 +76,12 @@ help_embed.add_field(
 help_embed.set_footer(
   text=(
     '''
-Some features are still in development 🛠️
-
+SSome features are still in development 🛠️
 The Rock Bot v1.0 ©️
     '''
     )
-)
+
+)# Help:
 
 @bot.group(
     name="help",
@@ -155,7 +154,7 @@ async def quote(ctx):
             title="Very inspirational quote",
             description=(
                 f"{QUOTE[1]}"
-                f"{DOUBLE_LINE_BREAK}*- ~~{QUOTE[2]}~~ The Rock*"
+                f"\n\n*- ~~{QUOTE[2]}~~ The Rock*" 
             ),
             color = discord.Color.teal()
         )
@@ -240,7 +239,7 @@ async def wellcum(ctx, *, arg:discord.Member):
     name="w",
     aliases=["welcome"]
 )
-async def gudmorn_help(ctx):
+async def welcome_help(ctx):
     await ctx.send(
         embed=discord.Embed(
             title="Welcome",
@@ -376,5 +375,3 @@ async def hang_the_man(ctx):
             description="This feature is in development."
         )
     )
-
-
