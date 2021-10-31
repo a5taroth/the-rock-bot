@@ -4,7 +4,6 @@
 import discord
 import random
 import json
-import images
 import response
 
 from urllib.request import urlopen
@@ -32,7 +31,7 @@ bot = commands.Bot(
 )
 bot.remove_command("help")
 
-
+# Help:
 help_embed=discord.Embed(
     title="Help",
     description=f"Use {PREFIX}help <command> for more info",
@@ -75,13 +74,13 @@ help_embed.add_field(
 )
 help_embed.set_footer(
   text=(
-    '''
-SSome features are still in development 🛠️
-The Rock Bot v1.0 ©️
-    '''
+'''
+Some features are still in development 🛠️
+The Rock Bot v1.0 (c) 2021, A5taroth and iluvsoup
+'''
     )
+)
 
-)# Help:
 
 @bot.group(
     name="help",
@@ -115,7 +114,7 @@ async def ping(ctx):
 )
 async def _pancake(ctx):
     _embed=discord.Embed(
-        title="Error 69",
+        title="We're working on it!9",
         description="This feature is in development."  )
   
     await ctx.channel.send(
@@ -134,7 +133,7 @@ async def pancake(ctx):
         )
     )
 
-
+# Quote
 @bot.command(
     name="quote",
     aliases=["quotes", "q"]
@@ -173,6 +172,7 @@ async def cool_quote(ctx):
     )
 
 
+# RockBall
 @bot.command(
     name="rockball",
     aliases=["ask-8ball", "magic-8ball", "8b", "8-ball", "8ball", "rb"]
@@ -214,6 +214,7 @@ async def those_8_balls_tho(ctx):
     )
 
 
+# Welcome
 @bot.command(
     name="welcome",
     aliases=["w"]
@@ -247,7 +248,7 @@ async def welcome_help(ctx):
         )
     )
 
-
+# Good Morning
 @bot.command(
     name="goodmorning",
     aliases=["gm"]
@@ -282,6 +283,7 @@ async def gudmorn_help(ctx):
     )
 
 
+# Good Night
 @bot.command(
     name="goodnight",
     aliases=["gn"]
