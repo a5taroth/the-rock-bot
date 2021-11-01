@@ -3,7 +3,6 @@ import discord
 from config import PREFIX
 from discord.ext import commands
 
-
 help_embed=discord.Embed(
     title="Help",
     color=0xffffff,
@@ -13,18 +12,12 @@ help_embed.add_field(
     name=":rock: FEATURES",
     value=(
 '''
-:speaking_head: Inspiring quotes
-    `$quote`\n
-:ping_pong: Ping (Bonk)
-    `$ping`\n
-:man_dancing: It's gif NOT gif
-    `$gif`\n
-:wave: Greet the new members, you jerk
-    `$welcome`\n
-:sunrise: WAKE UP WAKE UP WAKE UP
-    `$goodmorning`\n
-:sleeping_accommodation: There's no demon under your bed
-    `$goodnight`\n
+:speaking_head: Inspiring quotes\n`$quote`\n
+:ping_pong: Ping (Bonk)\n`$ping`\n
+:man_dancing: It's gif NOT gif\n`$gif`\n
+:wave: Greet the new members, you jerk\n`$welcome`\n
+:sunrise: WAKE UP WAKE UP WAKE UP\n`$goodmorning`\n
+:sleeping_accommodation: Don't look under your bed\n`$goodnight`\n
 '''
     )
 )
@@ -32,16 +25,11 @@ help_embed.add_field(
     name=":game_die: FUN",
     value=(
 '''
-:8ball: Ask the Rock's ball
-    `$8ball`\n
-:thinking_face: Fun facts about The Rock
-    `$trivia`\n
-:pancakes: The Pancake Empire
-    `$pancake`\n
-:skull: Hangman but bad
-    `$hangman`\n
-:red_car: F1: Scuffed Edition
-    `$race`\n
+:8ball: Ask the Rock's ball\n`$8ball`\n
+:thinking_face: Fun facts about The Rock\n`$trivia`\n
+:pancakes: The Pancake Empire\n`$pancake`\n
+:skull: Hangman but bad\n`$hangman`\n
+:red_car: F1: Scuffed Edition\n`$race`\n
 '''
     )
 )
@@ -67,6 +55,19 @@ class Help(commands.Cog):
         await ctx.send(embed=help_embed)
 
     @help.command(
+        name="ping",
+        aliases=["pingpong", "pong", "latency"]
+    )
+    async def ping(self, ctx):
+        await ctx.send(
+            embed=discord.Embed(
+                title="Ping",
+                color=0xffff00,
+                description="The Rock will serve you some of those delicious :pancakes:"
+            )
+        ) 
+
+    @help.command(
         name="pancake",
         aliases=["pc", "pancakes"]
     )
@@ -83,7 +84,7 @@ class Help(commands.Cog):
         name="quote",
         aliases=["quotes", "q"]
     )
-    async def cool_quote(self, ctx):
+    async def quote(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Quote",
@@ -96,7 +97,7 @@ class Help(commands.Cog):
         name="rockball",
         aliases=["ask-8ball", "magic-8ball", "8b", "8-ball", "8ball", "rb"]
     )
-    async def those_8_balls_tho(self, ctx):
+    async def rockball(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Ask the Rock's ball :8ball:",
@@ -109,12 +110,12 @@ class Help(commands.Cog):
         name="w",
         aliases=["welcome"]
     )
-    async def welcome_help(self, ctx):
+    async def welcome(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Welcome",
                 color=0xe67e22,
-                description="The Rock will heartily welcome you  to the server."
+                description="The Rock will heartily welcome someone to the server."
             )
         )
 
@@ -122,12 +123,12 @@ class Help(commands.Cog):
         name="gm",
         aliases=["goodmorning"]
     )
-    async def gudmorn_help(self, ctx):
+    async def goodmorning(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Good Morning",
                 color=0x3498db,
-                description="The Rock will wish you a good morning so you can feel accomplished in life."
+                description="The Rock will wish someone a good morning so they can feel accomplished in life."
             )
         )
 
@@ -135,7 +136,7 @@ class Help(commands.Cog):
         name="gn",
         aliases=["goodnight"]
     )
-    async def gudnite_help(self, ctx):
+    async def goodnight(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Good Night",
@@ -148,7 +149,7 @@ class Help(commands.Cog):
         name="hangman",
         aliases=["hg", "manhang?"]
     )
-    async def hangman_help(self, ctx):
+    async def hangman(self, ctx):
         await ctx.send(
             embed=discord.Embed(
                 title="Hangman",

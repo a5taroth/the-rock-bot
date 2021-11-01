@@ -4,6 +4,7 @@ import os
 
 from discord.ext import commands
 from urllib.request import urlopen
+from config import QUOTE_URL
 
 class Quote(commands.Cog):
     def __init__(self, bot):
@@ -15,7 +16,7 @@ class Quote(commands.Cog):
         invoke_without_command=True
     )
     async def quote(self, ctx):
-        QUOTE = json.load(urlopen(os.environ['QUOTE_URL']))[0]
+        QUOTE = json.load(urlopen(QUOTE_URL))[0]
 
         # QUOTE[0] = ID 
         # QUOTE[1] = Quote

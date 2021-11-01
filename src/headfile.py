@@ -8,6 +8,7 @@ import os
 from packages import webserver
 from discord.ext import commands
 from config import PREFIX
+from discord_buttons_plugin import *
 
 bot = commands.Bot(
     command_prefix = PREFIX, 
@@ -20,6 +21,7 @@ bot = commands.Bot(
 )
 bot.remove_command("help")
 
+buttons=ButtonsClient(bot)
 
 @bot.event
 async def on_ready():
@@ -32,7 +34,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.MissingRequiredArgument):
         await ctx.send(
             embed=discord.Embed(
-                title="Error69 occured",
+                title="Error occured",
                 color=discord.Color.red(),
                 description=(
 '''
@@ -43,6 +45,42 @@ Use $help <command> to learn the syntax
             )
         )
     else: raise error
+
+
+@buttons.click
+async def hello_butt(ctx):
+    await ctx.reply("Hello")
+
+@buttons.click
+async def bye_butt(ctx):
+    await ctx.reply("Bye")
+
+
+@bot.command(
+    name="tits"
+)
+async def tits(ctx):
+    await buttons.send(
+        content="Cuntent",
+        channel = ctx.channel.id,
+        components = [
+            ActionRow(
+                [
+                    Button(
+                        label="Hello", 
+                        style=ButtonType().Primary, 
+                        custom_id="hello_butt"       
+                    ),
+                    Button(
+                        label="Bye",
+                        style=ButtonType().Primary,
+                        custom_id="bye_butt"
+                    )
+                ]
+            )
+        ]
+    )
+
 
 for file in os.listdir("./src/modules"):
     if file.endswith(".py"):

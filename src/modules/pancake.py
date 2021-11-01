@@ -1,6 +1,22 @@
 import discord
+import time
+
 from discord.ext import commands
 from replit import db
+
+bussiness_running=False
+
+
+def countdown(t):
+    while t:
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+    
+    return False
+
 
 class Pancake(commands.Cog):
     def __init__(self, bot):
@@ -24,7 +40,7 @@ class Pancake(commands.Cog):
 
     @pancake.command(
         name="register",
-        aliases=["r", "reg"]
+        aliases=["reg"]
     )
     async def reg(self, ctx):
         if ctx.author in db:
@@ -52,7 +68,7 @@ class Pancake(commands.Cog):
 
     @pancake.command(
         name="balance",
-        aliases=["b", "bal"]
+        aliases=["bal"]
     )
     async def bal(self, ctx):
         pancake_bal=discord.Embed(
@@ -71,6 +87,25 @@ class Pancake(commands.Cog):
         await ctx.send(
             embed=pancake_bal
         )
+
+    @pancake.command(
+        name="run"
+    )
+    async def run(self, ctx):
+        global bussiness_running
+
+        if not bussiness_running:
+            bussiness_running=True
+            bussiness_running=countdown(30)
+        else: 
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Error84 occurred",
+                    color=0xff0000,
+                    description="Your shop is already running."
+                )
+            )
+
 
 def setup(bot):
     bot.add_cog(Pancake(bot))
