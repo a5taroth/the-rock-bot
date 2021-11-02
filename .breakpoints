@@ -176,25 +176,25 @@
       {
         "id": "ca86d6a3-b0e3-4fd2-820b-d561b7ccaf2a",
         "line": 2,
-        "version": 146,
+        "version": 184,
         "index": 54
       },
       {
         "id": "17f6848c-b8d4-4aa5-9384-f2983df82454",
         "line": 2,
-        "version": 146,
+        "version": 184,
         "index": 54
       },
       {
         "id": "7c2c4336-cc6e-44e2-ada1-58b3a6127bdb",
         "line": 2,
-        "version": 146,
+        "version": 184,
         "index": 54
       },
       {
         "id": "60afcc74-ae37-4321-a2e3-1647f4d0e9ec",
         "line": 2,
-        "version": 146,
+        "version": 184,
         "index": 54
       }
     ],
@@ -202,45 +202,73 @@
       {
         "id": "54d271ae-c83c-4480-bce9-ee02ba5a5afb",
         "line": 4,
-        "version": 1047,
-        "index": 70
+        "version": 1725,
+        "index": 71
+      },
+      {
+        "id": "32becb23-fb0c-4cd8-9f99-abb501dc19dd",
+        "line": 20,
+        "version": 1852,
+        "index": 749
       },
       {
         "id": "d394f595-755f-4f11-b6a3-bbcd339c32e9",
-        "line": 28,
-        "version": 1368,
-        "index": 658
+        "line": 25,
+        "version": 1725,
+        "index": 912673
+      },
+      {
+        "id": "ce1acdfc-39f7-48d3-b94b-ef992ad0ad4b",
+        "line": 57,
+        "version": 1725,
+        "index": 913359
       },
       {
         "id": "ed8fee8a-49fe-45fc-8799-93656bb47a46",
         "line": 59,
-        "version": 1668,
-        "index": 1224
-      },
-      {
-        "id": "ce1acdfc-39f7-48d3-b94b-ef992ad0ad4b",
-        "line": 63,
-        "version": 1369,
-        "index": 1493
+        "version": 1725,
+        "index": 913361
       },
       {
         "id": "5cd1718e-bcfa-4c90-b165-d2227b620925",
-        "line": 68,
-        "version": 1521,
-        "index": 1352
+        "line": 59,
+        "version": 1725,
+        "index": 913361
+      }
+    ],
+    "src/modules/greetings": [
+      {
+        "id": "f52624dc-630e-4a2c-98b3-d1238100983c",
+        "line": 1,
+        "version": 0,
+        "index": 0
+      }
+    ],
+    "src/modules/greetings.py": [
+      {
+        "id": "ad21e70b-7e35-4c5f-87d1-a5002a25faf7",
+        "line": 3,
+        "version": 182,
+        "index": 29
+      },
+      {
+        "id": "afdde2e2-00f5-41ad-9056-ea366adafdad",
+        "line": 3,
+        "version": 182,
+        "index": 29
       }
     ],
     "src/modules/help.py": [
       {
         "id": "5c8d8250-7210-4bc0-9eff-993041c87c02",
         "line": 1,
-        "version": 944,
+        "version": 1137,
         "index": 0
       },
       {
         "id": "f2ced4c2-3a25-4a67-a143-01ea3105169b",
         "line": 1,
-        "version": 944,
+        "version": 1137,
         "index": 0
       }
     ],
@@ -248,38 +276,76 @@
       {
         "id": "39fdf8e9-bcae-4a96-85bf-9de7fdcae5c6",
         "line": 1,
-        "version": 875,
+        "version": 1165,
         "index": 0
       },
       {
         "id": "5c7fc9d3-69de-410f-8da8-1dddc1cfb95e",
         "line": 1,
-        "version": 875,
+        "version": 1165,
         "index": 0
       },
       {
         "id": "47095972-6660-4fc1-934a-a8a0ea38a0b3",
         "line": 2,
-        "version": 875,
-        "index": 15
+        "version": 1165,
+        "index": 26
       },
       {
         "id": "b5e0bc79-70d2-44d2-b5c8-995c2d789509",
-        "line": 14,
-        "version": 879,
-        "index": 214
+        "line": 26,
+        "version": 1165,
+        "index": 427
       },
       {
         "id": "65ea7749-c502-4ce3-b5be-bae646f575a1",
-        "line": 94,
-        "version": 976,
-        "index": 2383
+        "line": 95,
+        "version": 1165,
+        "index": 2310
       },
       {
         "id": "340947da-72c4-44d3-bc8d-7058da228313",
         "line": 95,
-        "version": 978,
-        "index": 2408
+        "version": 1165,
+        "index": 2313
+      }
+    ],
+    "src/modules/shit": [
+      {
+        "id": "de32d76b-0970-4e81-bc91-5f0103af9751",
+        "line": 1,
+        "version": 25,
+        "index": 0
+      },
+      {
+        "id": "7c618863-2740-4d4f-8f50-3135b3569a0f",
+        "line": 22,
+        "version": 17,
+        "index": 469
+      },
+      {
+        "id": "020f52b7-9c78-4e53-8af5-039d562a5bed",
+        "line": 40,
+        "version": 17,
+        "index": 762
+      },
+      {
+        "id": "7207be0e-5796-40e8-81f8-49181a216919",
+        "line": 54,
+        "version": 17,
+        "index": 1036
+      },
+      {
+        "id": "ef42075e-7e91-470a-af48-cc2af54c19e1",
+        "line": 55,
+        "version": 17,
+        "index": 1044
+      },
+      {
+        "id": "3f67cf7a-72ee-472a-b43e-633c850a4f1f",
+        "line": 115,
+        "version": 17,
+        "index": 2528
       }
     ],
     "src/modules/shit.txt": [

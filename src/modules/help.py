@@ -55,6 +55,18 @@ class Help(commands.Cog):
         await ctx.send(embed=help_embed)
 
     @help.command(
+        name="me"
+    )
+    async def helpme(self, ctx):
+        await ctx.send(
+            embed=discord.Embed(
+                title="About Help..",
+                color=0xffff00,
+                description="I'm sorry, I can't help you. Save youself!"
+            )
+        ) 
+
+    @help.command(
         name="ping",
         aliases=["pingpong", "pong", "latency"]
     )

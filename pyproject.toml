@@ -11,6 +11,7 @@ Flask = "^2.0.2"
 replit = "^3.2.4"
 buttons = "^0.1.9"
 discord-buttons-plugin = "^0.1.2"
+Command = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 
