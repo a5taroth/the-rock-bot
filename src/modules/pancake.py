@@ -25,7 +25,7 @@ class Pancake(commands.Cog):
     @commands.group(
         name="pancake",
         aliases=["pc", "pancakes"],
-        invoke_without_command=True # what does this do -> for extra commands
+        invoke_without_command=True
     )
     async def pancake(self, ctx):
         embed=discord.Embed(
@@ -46,7 +46,7 @@ class Pancake(commands.Cog):
         if ctx.author in db:
             await ctx.send(
                 embed=discord.Embed(
-                    title="Error196 occured",
+                    title="Uh oh",
                     color=0xff0000,
                     description="User already registered. Use `$help pancake` to learn more."
                 )

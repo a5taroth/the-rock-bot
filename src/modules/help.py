@@ -1,35 +1,35 @@
 import discord
 
-from config import PREFIX
+from packages.config import PREFIX
 from discord.ext import commands
 
 help_embed=discord.Embed(
     title="Help",
-    color=0xffffff,
+    color=discord.Color.random(),
     description=f"Use {PREFIX}help <command> for more info",
 )
 help_embed.add_field(
     name=":rock: FEATURES",
     value=(
-'''
-:speaking_head: Inspiring quotes\n`$quote`\n
-:ping_pong: Ping (Bonk)\n`$ping`\n
-:man_dancing: It's gif NOT gif\n`$gif`\n
-:wave: Greet the new members, you jerk\n`$welcome`\n
-:sunrise: WAKE UP WAKE UP WAKE UP\n`$goodmorning`\n
-:sleeping_accommodation: Don't look under your bed\n`$goodnight`\n
+f'''
+:speaking_head: Inspiring quotes\n`{PREFIX}quote`\n
+:ping_pong: Ping\n`{PREFIX}ping`\n
+:man_dancing: It's gif, NOT gif\n`{PREFIX}gif`\n
+:wave: Greet the new members\n`{PREFIX}welcome`\n
+:sunrise: Rise and shine\n`{PREFIX}goodmorning`\n
+:sleeping_accommodation: Don't look under your bed\n`{PREFIX}goodnight`
 '''
     )
 )
 help_embed.add_field(
     name=":game_die: FUN",
     value=(
-'''
-:8ball: Ask the Rock's ball\n`$8ball`\n
-:thinking_face: Fun facts about The Rock\n`$trivia`\n
-:pancakes: The Pancake Empire\n`$pancake`\n
-:skull: Hangman but bad\n`$hangman`\n
-:red_car: F1: Scuffed Edition\n`$race`\n
+f'''
+:8ball: Ask the Rock's ball\n`{PREFIX}rockball`\n
+:thinking_face: Fun facts about The Rock\n`{PREFIX}funfact`\n
+:pancakes: The Pancake Empire\n`{PREFIX}pancake`\n
+:skull: Hangman but bad\n`{PREFIX}hangman`\n
+:red_car: F1: Scuffed Edition\n`{PREFIX}race`\n
 '''
     )
 )
@@ -46,7 +46,6 @@ class Help(commands.Cog):
     def __init__(self, bot):
         self.bot=bot
 
-
     @commands.group(
         name="help",
         invoke_without_command=True
@@ -58,13 +57,7 @@ class Help(commands.Cog):
         name="me"
     )
     async def helpme(self, ctx):
-        await ctx.send(
-            embed=discord.Embed(
-                title="About Help..",
-                color=0xffff00,
-                description="I'm sorry, I can't help you. Save youself!"
-            )
-        ) 
+        await ctx.send("Uhh, what am I supposed to do?")
 
     @help.command(
         name="ping",
@@ -74,7 +67,7 @@ class Help(commands.Cog):
         await ctx.send(
             embed=discord.Embed(
                 title="Ping",
-                color=0xffff00,
+                color=0xFF4C30,
                 description="The Rock will serve you some of those delicious :pancakes:"
             )
         ) 
@@ -87,7 +80,7 @@ class Help(commands.Cog):
         await ctx.send(
             embed=discord.Embed(
                 title="Pancake",
-                color=0xffff00,
+                color=0xFFC219,
                 description="The Rock will serve you some of those delicious :pancakes:"
             )
         )
@@ -107,7 +100,7 @@ class Help(commands.Cog):
 
     @help.command(
         name="rockball",
-        aliases=["ask-8ball", "magic-8ball", "8b", "8-ball", "8ball", "rb"]
+        aliases=["rb", "8b", "8-ball", "8ball"]
     )
     async def rockball(self, ctx):
         await ctx.send(
@@ -153,13 +146,13 @@ class Help(commands.Cog):
             embed=discord.Embed(
                 title="Good Night",
                 color=0x7289da,
-                description="The Rock will wish you a night so you can have sweet dreams."
+                description="The Rock will wish you a good night so you can have sweet dreams ABOUT HIM."
             )
         )
 
     @help.command(
         name="hangman",
-        aliases=["hg", "manhang?"]
+        aliases=["hm"]
     )
     async def hangman(self, ctx):
         await ctx.send(

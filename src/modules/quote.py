@@ -1,10 +1,9 @@
 import discord
 import json
-import os
 
 from discord.ext import commands
 from urllib.request import urlopen
-from config import QUOTE_URL
+from packages.config import QUOTE_URL
 
 class Quote(commands.Cog):
     def __init__(self, bot):
@@ -23,12 +22,11 @@ class Quote(commands.Cog):
         # QUOTE[2] = Author
 
         if QUOTE[2]=='': QUOTE[2]="Unknown"
-#why are you on your school computer at this time of the day (i mean night)
 
         await ctx.channel.send(
             embed=discord.Embed(
                 title="Very inspirational quote",
-                color=0x1abc9c,
+                color=discord.Color.random(),
                 description=(
                     f"{QUOTE[1]}"
                     f"\n\n*- ~~{QUOTE[2]}~~ The Rock*"

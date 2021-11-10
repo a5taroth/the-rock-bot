@@ -12,6 +12,8 @@ replit = "^3.2.4"
 buttons = "^0.1.9"
 discord-buttons-plugin = "^0.1.2"
 Command = "^0.1.0"
+discord-py-interactions = "^3.0.2"
+orjson = "^3.6.4"
 
 [tool.poetry.dev-dependencies]
 

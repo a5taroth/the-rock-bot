@@ -1,2 +1,4 @@
+# repl.it root configuration file
+
 language="python3"
-run="python src/headfile.py"
+run="python src/main.py"

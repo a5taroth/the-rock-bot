@@ -7,7 +7,7 @@ app = Flask('')
 
 @app.route('/')
 def main():
-    return "The Rock is grinding... don't disturb him and go to discord.com"
+    return "therockbot is working (hopefully)"
 
 def run():
     app.run(host="0.0.0.0", port=8080)
