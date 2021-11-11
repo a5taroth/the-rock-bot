@@ -1,9 +1,14 @@
+# Copyright (C) 2021, A5taroth and iluvsoup
+# This module covers the quote functionality of the bot.
+
 import discord
 import json
 
 from discord.ext import commands
 from urllib.request import urlopen
-from packages.config import QUOTE_URL
+from packages.config import QuoteConfig
+
+QUOTE_CONFIG=QuoteConfig()
 
 class Quote(commands.Cog):
     def __init__(self, bot):
@@ -15,11 +20,7 @@ class Quote(commands.Cog):
         invoke_without_command=True
     )
     async def quote(self, ctx):
-        QUOTE = json.load(urlopen(QUOTE_URL))[0]
-
-        # QUOTE[0] = ID 
-        # QUOTE[1] = Quote
-        # QUOTE[2] = Author
+        QUOTE = json.load(urlopen(QUOTE_CONFIG.QUOTE_URL))[0]
 
         if QUOTE[2]=='': QUOTE[2]="Unknown"
 
@@ -34,5 +35,19 @@ class Quote(commands.Cog):
             )
         )
 
+
 def setup(bot):
     bot.add_cog(Quote(bot))
+
+
+'''
+Quote Return Structure:
+[
+    [
+        'QuoteID',
+        'Quote',
+        'Author'
+    ]
+]
+
+'''

@@ -1,4 +1,8 @@
+# Copyright (C) 2021, A5taroth and iluvsoup
+# This module holds the gif functionality of the bot.
+
 import discord
+
 from discord.ext import commands
 
 class Gif(commands.Cog):
@@ -18,5 +22,7 @@ class Gif(commands.Cog):
             )
         )
 
+
 def setup(bot):
     bot.add_cog(Gif(bot))
+    

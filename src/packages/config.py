@@ -1,6 +1,8 @@
-# The config file with a whole lot of configurations.
+# Copyright (C) 2021, A5taroth and iluvsoup
+# This package holds a whole lot of configurations.
 
-PREFIX="$"
-QUOTE_URL="http://www.famous-quotes.uk/api.php?id=random&minpop=75"
+class GeneralConfig():
+    PREFIX="$"
 
-bussiness_running=False
+class QuoteConfig():
+    QUOTE_URL="http://www.famous-quotes.uk/api.php?id=random&minpop=75"

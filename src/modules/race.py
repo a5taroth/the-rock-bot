@@ -1,4 +1,8 @@
+# Copyright (C) 2021, A5taroth and iluvsoup
+# This module holds the code for the race game.
+
 import discord
+
 from discord.ext import commands
 
 class Race(commands.Cog):
@@ -18,6 +22,7 @@ class Race(commands.Cog):
                 color = discord.Color.gold()
             )
         )
+
 
 def setup(bot):
     bot.add_cog(Race(bot))
