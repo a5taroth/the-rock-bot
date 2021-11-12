@@ -1,4 +1,5 @@
-# repl.it root configuration file
+# Copyright (C) 2021, A5taroth
+# This is the repl.it root configuration file.
 
 language="python3"
 run="python src/main.py"

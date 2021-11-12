@@ -1,28 +1,45 @@
+# Copyright (C) 2021, A5taroth and iluvsoup
 # The main program where everything is put together.
 
 import datetime, discord, os, random
 
 from discord.ext import commands
+from replit import db
 from packages import webserver
 from packages.config import GeneralConfig
 
 GENERAL=GeneralConfig()
 
+def get_prefix(bot, msg):
+        if not msg.guild: return GENERAL.DEFAULT_PREFIX
+        else : return db['prefix'][str(msg.guild.id)]
+
+
 bot = commands.Bot(
-    command_prefix = GENERAL.PREFIX, 
-    activity = discord.Activity(
+    command_prefix=(get_prefix), 
+    activity=discord.Activity(
         name="Face Off",
-        details=f"Use {GENERAL.PREFIX}help to learn more.",
         type=discord.ActivityType.listening
     ),
     status = discord.Status.online
 )
 bot.remove_command("help")
 
+
 @bot.event
 async def on_ready():
     random.seed(datetime.time)
-    print(f"{bot.user} is now online.")
+    print("{0.user} is now online.".format(bot))
+
+
+@bot.event
+async def on_guild_join(guild):
+    db['prefix'][str(guild.id)]=GENERAL.DEFAULT_PREFIX
+
+
+@bot.event
+async def on_guild_remove(guild):
+    del db['prefix'][str(guild.id)]
 
 
 @bot.event
@@ -63,6 +80,15 @@ for file in os.listdir("./src/modules"):
     if file.endswith(".py"):
         bot.load_extension(f"modules.{file[0:-3]}")
         print(f"{file[0:-3]} is now loaded.")
+
+
+@bot.command(name="prefix")
+@commands.guild_only()
+async def prefix(ctx, prefix):
+    print(prefix)
+    db['prefix'][str(ctx.guild.id)]=prefix
+
+    print(db['prefix'][str(ctx.guild.id)])
 
 webserver.run()
 

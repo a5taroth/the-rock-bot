@@ -4,13 +4,11 @@
 import discord
 
 from discord.ext import commands
-from packages.config import GeneralConfig
-
-GENERAL=GeneralConfig()
+from main import get_prefix
 
 help_embed=discord.Embed(
     title="Help",
-    description="Use `{0}help <cmd>` for more info".format(GENERAL.PREFIX)
+    description="Use `{0}help <cmd>` for more info".format(get_prefix)
 )
 help_embed.add_field(
     name=":rock: **General**",
@@ -19,14 +17,14 @@ help_embed.add_field(
         ":wave: Greet the new members\n`{0}welcome`\n\n"
         ":sunrise: Rise and shine\n`{0}goodmorning`\n\n"
         ":sleeping_accommodation: Don't look under your bed\n`{0}goodnight`\n\n"
-    ).format(GENERAL.PREFIX)
+    ).format(get_prefix)
 )
 help_embed.add_field(
     name=":game_die: **Fun**",
     value=(
         ":speaking_head: Inspiring quotes\n`{0}quote`\n\n"
         ":8ball: Ask the Rock's Ball\n`{0}rockball`\n\n"
-    ).format(GENERAL.PREFIX)
+    ).format(get_prefix)
 )
 help_embed.add_field(
     name=":tools: **Features in development**",
@@ -35,7 +33,7 @@ help_embed.add_field(
         ":pancakes: The Rock loves pancakes!\n`{0}pancake`\n\n"
         ":red_car: Intense match of F1.. in Discord\n`{0}race`\n\n"
         ":skull: Hangman. Just hangman.\n`{0}hangman`\n\n"
-    ).format(GENERAL.PREFIX)
+    ).format(get_prefix)
 )
 help_embed.set_footer(
     text="The Rock Bot v1.0 (c) 2021, A5taroth and iluvsoup"
@@ -73,7 +71,7 @@ class Help(commands.Cog):
         )
         ping_embed.add_field(
             name="Syntax",
-            value="`{0}ping`".format(GENERAL.PREFIX)
+            value="`{0}ping`".format(get_prefix)
         )
         await ctx.send(embed=ping_embed) 
 
@@ -89,7 +87,7 @@ class Help(commands.Cog):
         )
         pancake_embed.add_field(
             naem="Syntax",
-            value="`{0}pancake`".format(GENERAL.PREFIX)
+            value="`{0}pancake`".format(get_prefix)
         )
         await ctx.send(embed=pancake_embed)
 
@@ -105,7 +103,7 @@ class Help(commands.Cog):
         )
         quote_embed.add_field(
             name="Syntax",
-            value="`{0}quote`".format(GENERAL.PREFIX)
+            value="`{0}quote`".format(get_prefix)
         )
         await ctx.send(embed=quote_embed)
 
@@ -121,7 +119,7 @@ class Help(commands.Cog):
         )
         rb_embed.add_field(
             name="Syntax",
-            value="`{0}rockball <question>`".format(GENERAL.PREFIX)
+            value="`{0}rockball <question>`".format(get_prefix)
         )
         await ctx.send(embed=rb_embed)
 
@@ -137,7 +135,7 @@ class Help(commands.Cog):
         )
         wembed.add_field(
             name="Syntax",
-            value="`{0}welcome <user>`".format(GENERAL.PREFIX)
+            value="`{0}welcome <user>`".format(get_prefix)
         )
         await ctx.send(embed=wembed)
 
@@ -153,7 +151,7 @@ class Help(commands.Cog):
         )
         gm_embed.add_field(
             name="Syntax",
-            value="`{0}gm <user>".format(GENERAL.PREFIX)
+            value="`{0}gm <user>".format(get_prefix)
         )
         await ctx.send(embed=gm_embed)
 
@@ -169,7 +167,7 @@ class Help(commands.Cog):
         )
         gn_embed.add_field(
             name="Syntax",
-            value="`{0}gn <user>".format(GENERAL.PREFIX)
+            value="`{0}gn <user>".format(get_prefix)
         )
         await ctx.send(embed=gn_embed)
 
@@ -185,7 +183,7 @@ class Help(commands.Cog):
         )
         hangman_embed.add_field(
             name="Syntax",
-            value="`{0}hangman`".format(GENERAL.PREFIX)
+            value="`{0}hangman`".format(get_prefix)
         )
         await ctx.send(embed=hangman_embed)
 
@@ -201,7 +199,7 @@ class Help(commands.Cog):
         )
         race_embed.add_field(
             name="Syntax",
-            value="`{0}race`".format(GENERAL.PREFIX)
+            value="`{0}race`".format(get_prefix)
         )
         await ctx.send(embed=race_embed)
 
@@ -217,7 +215,7 @@ class Help(commands.Cog):
         )
         gif_embed.add_field(
             name="Syntax",
-            value="`{0}gif`".format(GENERAL.PREFIX)
+            value="`{0}gif`".format(get_prefix)
         )
         await ctx.send(embed=gif_embed)
 
