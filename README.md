@@ -16,4 +16,4 @@ The main branch contains the stable code for the currently running version of th
 The development branch will have the present state of the code in development. 
 You probably don't want to look at it.
 
-
+**Contributors:** @iluvsoup
