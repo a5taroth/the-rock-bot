@@ -1,59 +1,63 @@
 # Copyright (C) 2021, A5taroth and iluvsoup
 # This module has all information regarding the bot's commands.
 
-import discord
+import datetime, discord, random
 
 from discord.ext import commands
-from main import get_prefix
+from replit import db
 
-help_embed=discord.Embed(
-    title="Help",
-    description="Use `{0}help <cmd>` for more info".format(get_prefix)
-)
-help_embed.add_field(
-    name=":rock: **General**",
-    value=(
-        ":ping_pong: Ping\n`{0}ping`\n\n"
-        ":wave: Greet the new members\n`{0}welcome`\n\n"
-        ":sunrise: Rise and shine\n`{0}goodmorning`\n\n"
-        ":sleeping_accommodation: Don't look under your bed\n`{0}goodnight`\n\n"
-    ).format(get_prefix)
-)
-help_embed.add_field(
-    name=":game_die: **Fun**",
-    value=(
-        ":speaking_head: Get inspiring quotes\n`{0}quote`\n\n"
-        ":8ball: Ask the Rock's ba- BIG BRAIN!\n`{0}rockball`\n\n"
-    ).format(get_prefix)
-)
-help_embed.add_field(
-    name=":tools: **Features in development**",
-    value=(
-        ":man_dancing: It's gif, NOT gif\n`{0}gif`\n\n"
-        ":pancakes: The Pancake Emporium\n`{0}pancake`\n\n"
-        ":red_car: F1.. Scuffed Edition\n`{0}race`\n\n"
-        ":skull: Hangman. That's it.\n`{0}hangman`\n\n"
-    ).format(get_prefix)
-)
-help_embed.add_field(
-    name=":closed_lock_with_key: **Administrator**",
-    value=(
-        ":key: Prefix changer\n`{0}prefix`\n"
-    ).format(get_prefix)
-)
-help_embed.set_footer(
-    text="The Rock Bot v1.0 (c) 2021, A5taroth and iluvsoup"
-)
 
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot=bot
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        random.seed(datetime.time)
 
     @commands.group(
         name="help",
         invoke_without_command=True
     )
     async def help(self, ctx):
+        help_embed=discord.Embed(
+            title="Help",
+            description="Use `{0}help <cmd>` for more info".format(db['prefix'][str(ctx.guild.id)])
+        )
+        help_embed.add_field(
+            name=":rock: **General**",
+            value=(
+                ":ping_pong: Ping\n`{0}ping`\n\n"
+                ":wave: Greet the new members\n`{0}welcome`\n\n"
+                ":sunrise: Rise and shine\n`{0}goodmorning`\n\n"
+                ":sleeping_accommodation: Don't look under your bed\n`{0}goodnight`\n\n"
+            ).format(db['prefix'][str(ctx.guild.id)])
+        )
+        help_embed.add_field(
+            name=":game_die: **Fun**",
+            value=(
+                ":speaking_head: Get inspiring quotes\n`{0}quote`\n\n"
+                ":8ball: Ask the Rock's ba- BIG BRAIN!\n`{0}rockball`\n\n"
+            ).format(db['prefix'][str(ctx.guild.id)])
+        )
+        help_embed.add_field(
+            name=":tools: **Features in development**",
+            value=(
+                ":man_dancing: It's gif, NOT gif\n`{0}gif`\n\n"
+                ":pancakes: The Pancake Emporium\n`{0}pancake`\n\n"
+                ":red_car: F1.. Scuffed Edition\n`{0}race`\n\n"
+                ":skull: Hangman. That's it.\n`{0}hangman`\n\n"
+            ).format(db['prefix'][str(ctx.guild.id)])
+        )
+        help_embed.add_field(
+            name=":closed_lock_with_key: **Administrator**",
+            value=(
+                ":key: Prefix changer\n`{0}prefix`\n"
+            ).format(db['prefix'][str(ctx.guild.id)])
+        )
+        help_embed.set_footer(
+            text="The Rock Bot v1.0 (c) 2021, A5taroth and iluvsoup"
+        )
         help_embed.color=discord.Color.random()
         await ctx.send(embed=help_embed)
 
@@ -71,7 +75,7 @@ class Help(commands.Cog):
         )
         prefix_embed.add_field(
             name="Syntax",
-            value="`{0}prefix <prefix>`".format(get_prefix)
+            value="`{0}prefix <prefix>`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=prefix_embed)
 
@@ -85,7 +89,7 @@ class Help(commands.Cog):
                 "life there's nothing I can do about it "
                 "however if you need help regarding "
                 "commands use `{1}help`"
-            ).format(ctx.author, get_prefix)
+            ).format(ctx.author, db['prefix'][str(ctx.guild.id)])
         )
 
     @help.command(
@@ -100,7 +104,7 @@ class Help(commands.Cog):
         )
         ping_embed.add_field(
             name="Syntax",
-            value="`{0}ping`".format(get_prefix)
+            value="`{0}ping`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=ping_embed) 
 
@@ -116,7 +120,7 @@ class Help(commands.Cog):
         )
         pancake_embed.add_field(
             naem="Syntax",
-            value="`{0}pancake`".format(get_prefix)
+            value="`{0}pancake`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=pancake_embed)
 
@@ -132,7 +136,7 @@ class Help(commands.Cog):
         )
         quote_embed.add_field(
             name="Syntax",
-            value="`{0}quote`".format(get_prefix)
+            value="`{0}quote`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=quote_embed)
 
@@ -148,7 +152,7 @@ class Help(commands.Cog):
         )
         rb_embed.add_field(
             name="Syntax",
-            value="`{0}rockball <question>`".format(get_prefix)
+            value="`{0}rockball <question>`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=rb_embed)
 
@@ -164,7 +168,7 @@ class Help(commands.Cog):
         )
         wembed.add_field(
             name="Syntax",
-            value="`{0}welcome <user>`".format(get_prefix)
+            value="`{0}welcome <user>`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=wembed)
 
@@ -180,7 +184,7 @@ class Help(commands.Cog):
         )
         gm_embed.add_field(
             name="Syntax",
-            value="`{0}gm <user>".format(get_prefix)
+            value="`{0}gm <user>".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=gm_embed)
 
@@ -196,7 +200,7 @@ class Help(commands.Cog):
         )
         gn_embed.add_field(
             name="Syntax",
-            value="`{0}gn <user>".format(get_prefix)
+            value="`{0}gn <user>".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=gn_embed)
 
@@ -212,7 +216,7 @@ class Help(commands.Cog):
         )
         hangman_embed.add_field(
             name="Syntax",
-            value="`{0}hangman`".format(get_prefix)
+            value="`{0}hangman`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=hangman_embed)
 
@@ -228,7 +232,7 @@ class Help(commands.Cog):
         )
         race_embed.add_field(
             name="Syntax",
-            value="`{0}race`".format(get_prefix)
+            value="`{0}race`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=race_embed)
 
@@ -244,7 +248,7 @@ class Help(commands.Cog):
         )
         gif_embed.add_field(
             name="Syntax",
-            value="`{0}gif`".format(get_prefix)
+            value="`{0}gif`".format(db['prefix'][str(ctx.guild.id)])
         )
         await ctx.send(embed=gif_embed)
 

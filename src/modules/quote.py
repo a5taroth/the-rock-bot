@@ -1,8 +1,7 @@
 # Copyright (C) 2021, A5taroth and iluvsoup
 # This module covers the quote functionality of the bot.
 
-import discord
-import json
+import discord, json
 
 from discord.ext import commands
 from urllib.request import urlopen

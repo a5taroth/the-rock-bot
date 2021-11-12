@@ -1,8 +1,7 @@
 # Copyright (C) 2021, A5taroth and iluvsoup
 # This module contains all infrastructure (responses) for the rockball.
 
-import discord
-import random
+import discord, random
 
 from discord.ext import commands
 

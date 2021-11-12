@@ -11,8 +11,8 @@ from packages.config import GeneralConfig
 GENERAL=GeneralConfig()
 
 def get_prefix(bot, msg):
-        if not msg.guild: return GENERAL.DEFAULT_PREFIX
-        else : return db['prefix'][str(msg.guild.id)]
+    if not msg.guild: return GENERAL.DEFAULT_PREFIX
+    else : return db['prefix'][str(msg.guild.id)]
 
 
 bot = commands.Bot(
@@ -85,8 +85,12 @@ for file in os.listdir("./src/modules"):
 @bot.command(name="prefix")
 @commands.guild_only()
 async def prefix(ctx, prefix):
-    if ctx.guild.ownerID == ctx.author.id: db['prefix'][str(ctx.guild.id)]=prefix
+    if ctx.guild.owner_id == ctx.author.id:
+        db['prefix'][str(ctx.guild.id)]=prefix
+        await ctx.message.add_reaction('✅')
+    else:
+        await ctx.message.add_reaction('❌')
+
 
 webserver.run()
-
 bot.run(os.environ['TOKEN'])
