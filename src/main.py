@@ -85,10 +85,7 @@ for file in os.listdir("./src/modules"):
 @bot.command(name="prefix")
 @commands.guild_only()
 async def prefix(ctx, prefix):
-    print(prefix)
-    db['prefix'][str(ctx.guild.id)]=prefix
-
-    print(db['prefix'][str(ctx.guild.id)])
+    if ctx.guild.ownerID == ctx.author.id: db['prefix'][str(ctx.guild.id)]=prefix
 
 webserver.run()
 

@@ -22,17 +22,23 @@ help_embed.add_field(
 help_embed.add_field(
     name=":game_die: **Fun**",
     value=(
-        ":speaking_head: Inspiring quotes\n`{0}quote`\n\n"
-        ":8ball: Ask the Rock's Ball\n`{0}rockball`\n\n"
+        ":speaking_head: Get inspiring quotes\n`{0}quote`\n\n"
+        ":8ball: Ask the Rock's ba- BIG BRAIN!\n`{0}rockball`\n\n"
     ).format(get_prefix)
 )
 help_embed.add_field(
     name=":tools: **Features in development**",
     value=(
         ":man_dancing: It's gif, NOT gif\n`{0}gif`\n\n"
-        ":pancakes: The Rock loves pancakes!\n`{0}pancake`\n\n"
-        ":red_car: Intense match of F1.. in Discord\n`{0}race`\n\n"
-        ":skull: Hangman. Just hangman.\n`{0}hangman`\n\n"
+        ":pancakes: The Pancake Emporium\n`{0}pancake`\n\n"
+        ":red_car: F1.. Scuffed Edition\n`{0}race`\n\n"
+        ":skull: Hangman. That's it.\n`{0}hangman`\n\n"
+    ).format(get_prefix)
+)
+help_embed.add_field(
+    name=":closed_lock_with_key: **Administrator**",
+    value=(
+        ":key: Prefix changer\n`{0}prefix`\n"
     ).format(get_prefix)
 )
 help_embed.set_footer(
@@ -52,16 +58,39 @@ class Help(commands.Cog):
         await ctx.send(embed=help_embed)
 
     @help.command(
+        name="prefix"
+    )
+    async def prefix(self, ctx):
+        prefix_embed=discord.Embed(
+            title="Prefix",
+            color=0x0ffad0,
+            description=(
+                "This command changes the command_prefix for the server.\n"
+                "(Admins only.)"
+            )
+        )
+        prefix_embed.add_field(
+            name="Syntax",
+            value="`{0}prefix <prefix>`".format(get_prefix)
+        )
+        await ctx.send(embed=prefix_embed)
+
+    @help.command(
         name="me"
     )
     async def help_me(self, ctx):
         await ctx.send(
-            "{0.mention} If it's about your messed up life there's nothing ".format(ctx.author)
+            (
+                "{0.mention} If it's about your messed up "
+                "life there's nothing I can do about it "
+                "however if you need help regarding "
+                "commands use `{1}help`"
+            ).format(ctx.author, get_prefix)
         )
 
     @help.command(
         name="ping",
-        aliases=["pingpong", "pong", "latency"]
+        aliases=["pong", "latency"]
     )
     async def ping(self, ctx):
         ping_embed=discord.Embed(
