@@ -27,32 +27,32 @@ class Help(commands.Cog):
         help_embed.add_field(
             name=":rock: **General**",
             value=(
-                ":ping_pong: Ping\n`{0}ping`\n\n"
-                ":wave: Greet the new members\n`{0}welcome`\n\n"
-                ":sunrise: Rise and shine\n`{0}goodmorning`\n\n"
-                ":sleeping_accommodation: Don't look under your bed\n`{0}goodnight`\n\n"
+                "`{0}ping`\n\n"
+                "`{0}welcome`\n\n"
+                "`{0}goodmorning`\n\n"
+                "`{0}goodnight`\n\n"
             ).format(db['prefix'][str(ctx.guild.id)])
         )
         help_embed.add_field(
             name=":game_die: **Fun**",
             value=(
-                ":speaking_head: Get inspiring quotes\n`{0}quote`\n\n"
-                ":8ball: Ask the Rock's ba- BIG BRAIN!\n`{0}rockball`\n\n"
+                "`{0}quote`\n\n"
+                "`{0}rockball`\n\n"
             ).format(db['prefix'][str(ctx.guild.id)])
         )
         help_embed.add_field(
             name=":tools: **Features in development**",
             value=(
-                ":man_dancing: It's gif, NOT gif\n`{0}gif`\n\n"
-                ":pancakes: The Pancake Emporium\n`{0}pancake`\n\n"
-                ":red_car: F1.. Scuffed Edition\n`{0}race`\n\n"
-                ":skull: Hangman. That's it.\n`{0}hangman`\n\n"
+                "`{0}gif`\n\n"
+                "`{0}pancake`\n\n"
+                "`{0}race`\n\n"
+                "`{0}hangman`\n\n"
             ).format(db['prefix'][str(ctx.guild.id)])
         )
         help_embed.add_field(
             name=":closed_lock_with_key: **Administrator**",
             value=(
-                ":key: Prefix changer\n`{0}prefix`\n"
+                "`{0}prefix`\n"
             ).format(db['prefix'][str(ctx.guild.id)])
         )
         help_embed.set_footer(
