@@ -84,13 +84,15 @@ for file in os.listdir("./src/modules"):
 
 @bot.command(name="prefix")
 @commands.guild_only()
+@commands.has_permissions(administrator=True)
 async def prefix(ctx, prefix):
-    if ctx.guild.owner_id == ctx.author.id:
-        db['prefix'][str(ctx.guild.id)]=prefix
-        await ctx.message.add_reaction('✅')
-    else:
-        await ctx.message.add_reaction('❌')
+    db['prefix'][str(ctx.guild.id)]=prefix
+    await ctx.message.add_reaction('✅')
 
+@prefix.error
+async def prefix_error(self, ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.message.add_reaction('❌')
 
 webserver.run()
 bot.run(os.environ['TOKEN'])
