@@ -1,4 +1,4 @@
-# [The Rock Bot](https://github.com/a5taroth/the-rock-bot/)
+# [The Rock Bot](https://github.com/a5taroth/the-rock-bot/releases/tag/v1.0)
 
 > **Disclaimer: Eye damage has been reported from viewing the source code.**
 
